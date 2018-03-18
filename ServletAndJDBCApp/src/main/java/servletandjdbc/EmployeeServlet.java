@@ -4,11 +4,28 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.logging.*;
 
 public class EmployeeServlet extends HttpServlet {
+
+    public void init(){
+
+        try (InputStream is=EmployeeServlet.class.getClassLoader().getResourceAsStream("logging.properties1")){
+            LogManager.getLogManager().readConfiguration(is);
+        }catch (Exception io){
+            Logger.getLogger(EmployeeServlet.class.getName()).severe("File with logging properties wasn't found.");
+            io.printStackTrace();
+        }
+    //    InputStream is=EmployeeServlet.class.getClassLoader().getResourceAsStream("logging.properties");
+      //  LogManager.getLogManager().readConfiguration(is);
+
+
+
+    }
 
     public void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException {
         res.setContentType("text/html charset=utf-8");
